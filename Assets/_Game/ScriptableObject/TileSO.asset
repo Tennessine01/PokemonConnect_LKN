@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8f69f2547bc0848bc03357f87c535d, type: 3}
+  m_Name: TileSO
+  m_EditorClassIdentifier: 
+  listTile:
+  - tileType: 1
+    icon: {fileID: 21300000, guid: 64c20305e3be2e543a2d2392e372b935, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 2
+    icon: {fileID: 21300000, guid: b0815b747e5790948a5c34edfc9840b2, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 3
+    icon: {fileID: 21300000, guid: e41350f8187c30d42b7aea3a9997aeea, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 4
+    icon: {fileID: 21300000, guid: 0980fc496ee80e64eb2ed8f3bd7b351d, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 5
+    icon: {fileID: 21300000, guid: 65502916bcbe2b54896d465c1aba7991, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 6
+    icon: {fileID: 21300000, guid: ec53802ce7a3caa409e7db43f8fb92d6, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 7
+    icon: {fileID: 21300000, guid: 4cf342e57fa366f46a084a9c7d554113, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 8
+    icon: {fileID: 21300000, guid: 48311fc84114144428175244ed90ae96, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 9
+    icon: {fileID: 21300000, guid: 267e68ff2c9b22647bd6df93a5b9b7e0, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 10
+    icon: {fileID: 21300000, guid: 3016034daf3977f4caca7ed80fa268e1, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 11
+    icon: {fileID: 21300000, guid: ef0b15eee05e8e94291fccbf46d50edf, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 12
+    icon: {fileID: 21300000, guid: 85f3e6fb126e2e247b8a50de4b680b8d, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 13
+    icon: {fileID: 21300000, guid: 306335cad5b53e54591110cd72c828df, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 14
+    icon: {fileID: 21300000, guid: ef32854b35ce7d14b95fab7f2842f8b4, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 15
+    icon: {fileID: 21300000, guid: 159e7eb9c7a25a6478e2f5e0a2d98170, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 16
+    icon: {fileID: 21300000, guid: 5127e91d148033c44ab2f081baa04178, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 17
+    icon: {fileID: 21300000, guid: 76d55519fa6c35c429c9b1c270b2a52f, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 18
+    icon: {fileID: 21300000, guid: 4bb86c994b5b9c34093d59fcd658e1f7, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 19
+    icon: {fileID: 21300000, guid: ba44d46eb1a44b644a69aa83db74e885, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 20
+    icon: {fileID: 21300000, guid: dd85e2618f6b3554f8c92db89c599241, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 21
+    icon: {fileID: 21300000, guid: 789c19bc385be1d4baaf333b150fbb2a, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 22
+    icon: {fileID: 21300000, guid: 62165ec63f864fc48a7cb7f8c807ec7d, type: 3}
+    IsSpecial: 0
+    IsClick: 1
+  - tileType: 51
+    icon: {fileID: 21300000, guid: 951c666d0f54afe47a4a0b349a246202, type: 3}
+    IsSpecial: 1
+    IsClick: 0
+  - tileType: 50
+    icon: {fileID: 21300000, guid: 49434c4810314f04cb1665f63b365e83, type: 3}
+    IsSpecial: 1
+    IsClick: 0
