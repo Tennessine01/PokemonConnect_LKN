@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { MainMenu, GamePlay, Win, Lose }
+public enum GameState { MainMenu, GamePlay, Win, Lose , Setting}
 
 public class GameManager : Singleton<GameManager>
 {
@@ -33,8 +33,8 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void Start()
-    {
-        UIManager.Ins.OpenUI<UIMainMenu>();
-    }
+    //private void Start()
+    //{
+    //    UIManager.Ins.OpenUI<UIMainMenu>();
+    //}
 }

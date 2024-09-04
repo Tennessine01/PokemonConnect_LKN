@@ -1,34 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : Singleton<LevelManager>
 {
     public List<Level> levels;  
-    public int currentLevelIndex = 0;
+    public int currentLevelNumber = 0;
     public int currentBackGroundIndex = 0;
     private Level currentLevel;
     public List<GameObject> listBackGround = new();
-    
+    private float maxTime;
     public void Start()
     {
         OnInit();
     }
     public void OnInit()
     {
-        //LoadLevel(currentLevelIndex);
+        UIManager.Ins.CloseAll();
+        UIManager.Ins.OpenUI<UIMainMenu>();
     }
     public void OnPlay()
     {
-        UIManager.Ins.OpenUI<UIGamePlay>();
-        GameManager.Ins.ChangeState(GameState.GamePlay);
-        LoadLevel(currentLevelIndex);
+        UIManager.Ins.CloseAll();
+        LoadLevel(currentLevelNumber);
         LoadBackGround(currentBackGroundIndex);
+        UIManager.Ins.OpenUI<UIGamePlay>().SetupGamePlay(maxTime);
 
     }
     public void OnFinish()
     {
-        currentLevelIndex++;
+        currentLevelNumber++;
         currentBackGroundIndex++;
         GridManager.Ins.OnDespawn();
         GameManager.Ins.ChangeState(GameState.Win);
@@ -37,20 +39,23 @@ public class LevelManager : Singleton<LevelManager>
     }
     public void OnLose()
     {
+        UIManager.Ins.CloseAll();
+        UIManager.Ins.OpenUI<UILose>();
 
     }
 
-    public void LoadLevel(int levelIndex)
+    public void LoadLevel(int numberLevel)
     {
-        if (levelIndex < 0 || levelIndex >= levels.Count)
+        if (numberLevel < 0 || numberLevel >= levels.Count)
         {
             GridManager.Ins.OnInit(currentLevel);
             return;
         }
 
-        currentLevelIndex = levelIndex;
-        currentBackGroundIndex = levelIndex;
-        currentLevel = levels[currentLevelIndex];
+        currentLevelNumber = numberLevel;
+        currentBackGroundIndex = numberLevel;
+        currentLevel = levels[currentLevelNumber];
+        maxTime = currentLevel.time;
 
         GridManager.Ins.OnInit(currentLevel);
     }

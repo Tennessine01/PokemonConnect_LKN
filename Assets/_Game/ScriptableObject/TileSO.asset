@@ -101,11 +101,11 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 62165ec63f864fc48a7cb7f8c807ec7d, type: 3}
     IsSpecial: 0
     IsClick: 1
-  - tileType: 51
-    icon: {fileID: 21300000, guid: 951c666d0f54afe47a4a0b349a246202, type: 3}
-    IsSpecial: 1
-    IsClick: 0
   - tileType: 50
     icon: {fileID: 21300000, guid: 49434c4810314f04cb1665f63b365e83, type: 3}
     IsSpecial: 1
-    IsClick: 0
+    IsClick: 1
+  - tileType: 51
+    icon: {fileID: 21300000, guid: 951c666d0f54afe47a4a0b349a246202, type: 3}
+    IsSpecial: 1
+    IsClick: 1

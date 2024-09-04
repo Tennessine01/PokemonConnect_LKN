@@ -6,9 +6,9 @@ using UnityEngine;
 public class GridManager : Singleton<GridManager>
 {
     public int Rows = 12;
-    public int Cols = 10;
+    public int Cols = 8;
     public Tile tilePrefab;
-    public float tileSpacing;
+    public float tileSpacing = 0.62f;
     public List<Tile> listTiles = new();
     public int numberOfTiles = 0;
     public Tile[,] grid;
@@ -26,9 +26,11 @@ public class GridManager : Singleton<GridManager>
     int endCol => Cols - 1;    
     public Coroutine removeTileCoroutine;
     public Coroutine hideLineAfterDelayCoroutine;
-
+    public bool IsCanPlay => GameManager.Ins.IsState(GameState.GamePlay);
+    //public bool IsCanClick;
     public void OnInit(Level level)
     {
+        //IsCanClick = true;
         numberOfTiles = 0;
         currentlevel = level;
         InitializeGrid();
@@ -57,20 +59,33 @@ public class GridManager : Singleton<GridManager>
                 grid[i, j] = tileObject;
             }
         }
-        AssignTileData(currentlevel.specialTiles);
+        AssignTileData();
     }
-    public void AssignTileData(List<SpecialTile> specialTiles)
+    public void AssignTileData()
     {
+        List<SpecialTile> specialTiles = currentlevel.specialTiles;
         List<TileData> tileDataList = tileSO.listTile;
         List<TileData> pairedTiles = new List<TileData>();
 
-        int totalPairs = ((Rows - 2) * (Cols - 2) - specialTiles.Count) / 2;
+        int totalTiles = currentlevel.fillablePositions.Count;
+        int totalPairs = totalTiles / 2;
 
+        // Get a number of tile types based on the current level
+        int numberOfTileTypes = Mathf.Min(currentlevel.numberOfTileTypes, tileDataList.Count);
+
+        // Randomly select tile types
+        List<TileData> selectedTileTypes = tileDataList
+            .Take(tileDataList.Count - 2)
+            .OrderBy(x => Random.value)
+            .Take(numberOfTileTypes)
+            .ToList();
+
+        // Pair tiles
         for (int i = 0; i < totalPairs; i++)
         {
-            TileData randomTileData = tileDataList[Random.Range(0, tileDataList.Count-2)];
+            TileData randomTileData = selectedTileTypes[Random.Range(0, selectedTileTypes.Count)];
             pairedTiles.Add(randomTileData);
-            pairedTiles.Add(randomTileData); // Add twice to ensure pairing
+            pairedTiles.Add(randomTileData);
         }
 
         pairedTiles = ShuffleTileData(pairedTiles);
@@ -80,26 +95,75 @@ public class GridManager : Singleton<GridManager>
         {
             TileData specialTileData = tileSO.GetTileData(specialTile.tileType);
             grid[specialTile.position.x, specialTile.position.y].
- SetTileData(specialTileData.tileType, specialTileData.icon, specialTileData.IsSpecial, specialTileData.IsClick);
+                SetTileData(specialTileData.tileType, specialTileData.icon, specialTileData.IsSpecial, specialTileData.IsClick);
             occupiedPositions.Add(specialTile.position);
         }
+
         int index = 0;
-        for (int i = 1; i < Rows - 1; i++)
+        foreach (Vector2Int position in currentlevel.fillablePositions)
         {
-            for (int j = 1; j < Cols - 1; j++)
+            if (!occupiedPositions.Contains(position))
             {
-                Vector2Int position = new Vector2Int(i, j);
-                if (!occupiedPositions.Contains(position))
-                {
-                    grid[i, j].SetTileData(pairedTiles[index].tileType, pairedTiles[index].icon, pairedTiles[index].IsSpecial, pairedTiles[index].IsClick);
-                    //listTiles.Add(grid[i, j]);
-                    numberOfTiles++;
-                    index++;
-                }
+                grid[position.x, position.y].SetTileData(pairedTiles[index].tileType, pairedTiles[index].icon, pairedTiles[index].IsSpecial, pairedTiles[index].IsClick);
+                numberOfTiles++;
+                index++;
             }
         }
     }
-//------------------Shuffle tile data------------------------
+    //public void AssignTileData(List<SpecialTile> specialTilesList)
+    //{
+    //    List<TileData> tileDataList = tileSO.listTile;
+    //    List<TileData> pairedTiles = new List<TileData>();
+
+    //    int totalTiles = (Rows - 2) * (Cols - 2) - specialTilesList.Count;
+    //    int totalPairs = totalTiles / 2;
+
+    //    //lay so luong type tu level 
+    //    int numberOfTileTypes = Mathf.Min(currentlevel.numberOfTileTypes, tileDataList.Count);
+
+    //    // random vi tri cho so loai tile vua layA
+    //    List<TileData> selectedTileTypes = tileDataList
+    //        .Take(tileDataList.Count - 2)
+    //        .OrderBy(x => Random.value)
+    //        .Take(numberOfTileTypes)
+    //        .ToList();
+    //    // Pair tiles
+    //    for (int i = 0; i < totalPairs; i++)
+    //    {
+    //        TileData randomTileData = selectedTileTypes[Random.Range(0, selectedTileTypes.Count)];
+    //        pairedTiles.Add(randomTileData);
+    //        pairedTiles.Add(randomTileData);
+    //    }
+
+    //    pairedTiles = ShuffleTileData(pairedTiles);
+
+    //    HashSet<Vector2Int> occupiedPositions = new HashSet<Vector2Int>();
+    //    foreach (SpecialTile specialTile in specialTilesList)
+    //    {
+    //        TileData specialTileData = tileSO.GetTileData(specialTile.tileType);
+    //        grid[specialTile.position.x, specialTile.position.y].
+    //            SetTileData(specialTileData.tileType, specialTileData.icon, specialTileData.IsSpecial, specialTileData.IsClick);
+    //        occupiedPositions.Add(specialTile.position);
+    //    }
+
+    //    int index = 0;
+    //    for (int i = 1; i < Rows - 1; i++)
+    //    {
+    //        for (int j = 1; j < Cols - 1; j++)
+    //        {
+    //            Vector2Int position = new Vector2Int(i, j);
+    //            if (!occupiedPositions.Contains(position))
+    //            {
+    //                grid[i, j].SetTileData(pairedTiles[index].tileType, pairedTiles[index].icon, pairedTiles[index].IsSpecial, pairedTiles[index].IsClick);
+    //                numberOfTiles++;
+    //                index++;
+    //            }
+    //        }
+    //    }
+    //}
+
+
+    //------------------Shuffle tile data------------------------
     public List<TileData> ShuffleTileData(List<TileData> listTile)
     {
         List<TileData> shuffledList = new List<TileData>(listTile);
@@ -137,6 +201,7 @@ public class GridManager : Singleton<GridManager>
                 }
             }
             listTileData = ShuffleTileData(listTileData);
+            //sau khi co 1 list data thi truyen data vao grid
             int index = 0;
             for (int i = startRow; i < endRow; i++)
             {
@@ -154,34 +219,40 @@ public class GridManager : Singleton<GridManager>
     //------------when selected tile--------------------------------------------------------
     public void SelectTile(Tile tile)
     {
-        if (selectedStartTile == null)
+        if (IsCanPlay)
         {
-            selectedStartTile = tile;
-            selectedStartTile.SetBorder(true);
-            //Debug.Log($"Selected Start Tile: {tile.Position}");
-        }
-        else if (selectedEndTile == null && tile != selectedStartTile)
-        {
-            selectedEndTile = tile;
-            selectedEndTile.SetBorder(true);
-            //Debug.Log($"Selected End Tile: {tile.Position}");
-
-            if (CanConnect(selectedStartTile, selectedEndTile, out List<Vector2Int> path))
+            if (selectedStartTile == null)
             {
-                //Debug.Log("Tiles can connect!");
-                DrawConnection(path);
-                numberOfTiles -= 2;
-
-                removeTileCoroutine = StartCoroutine(RemoveTilesWithDelay(selectedStartTile, selectedEndTile, 0.4f));
-                //RemoveTiles(selectedStartTile, selectedEndTile);
+                selectedStartTile = tile;
+                selectedStartTile.SetBorder(true);
+                //Debug.Log($"Selected Start Tile: {tile.Position}");
             }
-            //else{ Debug.Log("Tiles cannot connect.");}
-            selectedStartTile.SetBorder(false);
-            selectedEndTile.SetBorder(false);
-            selectedStartTile = null;
-            selectedEndTile = null;
-            //OnTileConnected();
-            
+            else if (selectedEndTile == null && tile != selectedStartTile)
+            {
+                selectedEndTile = tile;
+                selectedEndTile.SetBorder(true);
+                //Debug.Log($"Selected End Tile: {tile.Position}");
+
+                if (CanConnect(selectedStartTile, selectedEndTile, out List<Vector2Int> path))
+                {
+                    //Debug.Log("Tiles can connect!");
+                    DrawConnection(path);
+                    numberOfTiles -= 2;
+                    //IsCanClick = false;
+                    selectedStartTile.SetCanClick(false);
+                    selectedEndTile.SetCanClick(false);
+                    removeTileCoroutine = StartCoroutine(RemoveTilesWithDelay(selectedStartTile, selectedEndTile, 0.4f));
+                    //RemoveTiles(selectedStartTile, selectedEndTile);
+                }
+
+                //else{ Debug.Log("Tiles cannot connect.");}
+                selectedStartTile.SetBorder(false);
+                selectedEndTile.SetBorder(false);
+                selectedStartTile = null;
+                selectedEndTile = null;
+                //OnTileConnected();
+
+            }
         }
     }
 //---------------------check connect -----------------------------------------------------------------------
@@ -293,10 +364,10 @@ public class GridManager : Singleton<GridManager>
         currentPath.RemoveAt(currentPath.Count - 1);
     }
    
-
+    
     public void OnTileConnected()
     {
-        Debug.Log(numberOfTiles + "----------");
+        //Debug.Log(numberOfTiles + "----------");
         //------- ap rule sau khi connect duoc 2 o--------------
         if (numberOfTiles > 0)
         {
@@ -306,6 +377,7 @@ public class GridManager : Singleton<GridManager>
             {
                 ShuffleTileInGridUntilMatch();
             }
+            //IsCanClick = true;
         }
         else
         {
@@ -410,12 +482,17 @@ public class GridManager : Singleton<GridManager>
     private IEnumerator RemoveTilesWithDelay(Tile tile1, Tile tile2, float delay)
     {
         yield return new WaitForSeconds(delay);
+        tile1.SetCanClick(true); 
+        tile2.SetCanClick(true);
         RemoveTiles(tile1, tile2);
         OnTileConnected();
     }
     public void OnDespawn()
     {
-        StopCoroutine(removeTileCoroutine);
+        if(removeTileCoroutine != null)
+        {
+            StopCoroutine(removeTileCoroutine);
+        }
         for (int i = 0; i < Rows; i++)
         {
             for (int j = 0; j < Cols; j++)

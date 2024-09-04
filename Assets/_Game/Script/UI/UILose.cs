@@ -7,9 +7,16 @@ public class UILose : UICanvas
 {
     public Text score;
 
+    public override void Open()
+    {
+        base.Open();
+        GameManager.Ins.ChangeState(GameState.Lose);
+    }
+
     public void MainMenuButton()
     {
-        UIManager.Ins.OpenUI<UIMainMenu>();
+        GridManager.Ins.OnDespawn();
+        LevelManager.Ins.OnInit();
         Close(0);
     }
 }

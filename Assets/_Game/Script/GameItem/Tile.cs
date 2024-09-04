@@ -11,13 +11,7 @@ public class Tile : MonoBehaviour
     public SpriteRenderer border;
     public bool IsSpecial;
     public bool IsClick;
-   
-    //public void OnPointerClick(PointerEventData eventData)
-    //{
-    //    Debug.Log("click");
-        
-    //    GridManager.Ins.SelectTile(this);
-    //}
+    public bool IsCanClick;
     public void SetTileData(TileType type, Sprite image, bool isSpecial, bool isClick )
     {
         Type = type;
@@ -25,6 +19,7 @@ public class Tile : MonoBehaviour
         IsClick = isClick;
         IsSpecial = isSpecial;
         border.gameObject.SetActive(false);
+        IsCanClick = true;
     }
     public void CopyTileData(Tile otherTile)
     {
@@ -36,16 +31,25 @@ public class Tile : MonoBehaviour
         icon.sprite = null;
         IsSpecial = false;
         IsClick = false;
+        IsCanClick = true;
     }
-    private void OnMouseDown()
+    public virtual void OnMouseDown()
     {
-        if (Type != TileType.Empty && IsClick == true && GameManager.Ins.IsState(GameState.GamePlay))
+        if (Type != TileType.Empty && IsClick == true && GameManager.Ins.IsState(GameState.GamePlay) && IsCanClick)
         {
             GridManager.Ins.SelectTile(this);
         }
     }
     public void SetBorder(bool check)
     {
-        border.gameObject.SetActive(check);
+        if(Type != TileType.Empty)
+        {
+            border.gameObject.SetActive(check);
+        }
     }
+    public void SetCanClick(bool check)
+    {
+        IsCanClick = check;
+    }
+
 }

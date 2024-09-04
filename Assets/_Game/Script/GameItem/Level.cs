@@ -8,6 +8,9 @@ public class Level : ScriptableObject
     public string levelName;
     public List<SpecialTile> specialTiles;
     [SerializeField] LevelRule levelRule;
+    public float time;
+    public int numberOfTileTypes;
+    public List<Vector2Int> fillablePositions; // New: positions to fill data
 
     public void OnPlay()
     {
@@ -26,19 +29,20 @@ public class Level : ScriptableObject
 public class SpecialTile
 {
     public Vector2Int position; 
-    public TileType tileType;  
+    public TileType tileType;
+    //public Sprite icon;
 }
 
 //public class SpecialTileManager : MonoBehaviour
 //{
-//    public List<SpecialTile> specialTiles = new List<SpecialTile>();
+//    public List<SpecialTile> specialTilesList = new List<SpecialTile>();
 
 //    public List<SpecialTile> GetValidSpecialTiles(int rows, int cols)
 //    {
 //        HashSet<Vector2Int> occupiedPositions = new HashSet<Vector2Int>();
 //        List<SpecialTile> validSpecialTiles = new List<SpecialTile>();
 
-//        foreach (var specialTile in specialTiles)
+//        foreach (var specialTile in specialTilesList)
 //        {
 //            if (!IsWithinBounds(specialTile.position, rows, cols))
 //            {

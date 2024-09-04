@@ -34,3 +34,4 @@ public enum TileType
     Water = 50,
     Rock = 51,
 }
+public enum Mode { None, Fillable, Rock, Water }

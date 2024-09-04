@@ -15,3 +15,5 @@ MonoBehaviour:
   levelName: level3
   specialTiles: []
   levelRule: {fileID: 11400000, guid: 982880ffadb86db498bd41a4bf89615e, type: 2}
+  time: 120
+  numberOfTileTypes: 15
