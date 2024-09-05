@@ -2948,6 +2948,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 38154bd67773d3f43824f3e89fa2d44c, type: 2}
   - {fileID: 11400000, guid: d6805e4edbbc9854a942d7da5dcadb3d, type: 2}
   - {fileID: 11400000, guid: 362d4f171e6ad7e44ad503ac93b96046, type: 2}
+  - {fileID: 11400000, guid: 0a3462f80de14c149b8160a0aecc4c2b, type: 2}
   tileSO: {fileID: 11400000, guid: 3ba8407c35fb8774fbd70a15fb163c55, type: 2}
   tilePrefab: {fileID: 4398880759073325344, guid: 945b05c9184e9fd47b5b3436fede357d, type: 3}
   rows: 0

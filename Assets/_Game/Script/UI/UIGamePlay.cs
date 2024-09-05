@@ -18,7 +18,7 @@ public class UIGamePlay : UICanvas
     }
     void Update()
     {
-        Debug.Log(IsCanUpdate);
+        //Debug.Log(IsCanUpdate);
         if (timeLeft > 0 && IsCanUpdate)
         {
             timeLeft -= Time.deltaTime;
